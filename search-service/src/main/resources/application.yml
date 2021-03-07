@@ -1,0 +1,40 @@
+server:
+  port: 8081
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/wiley
+  application:
+    name: search-service
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: search-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      spring:
+        json:
+          trusted:
+            packages: com.wiley.booking.*
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+kafka:
+  bootstrapAddress: localhost:9092
+
+app:
+  booking:
+    createtopic: booking-topic
+  payment:
+    paymenttopic: payment-topic
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8192/oauth/check_token
+    client:
+      client-id: web
+      client-secret: webpass
