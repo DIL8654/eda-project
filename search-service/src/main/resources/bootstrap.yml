@@ -11,5 +11,5 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    instance-id: ${spring.application.name}-${random.int}
+    instance-id: ${spring.application.name}
     hostname: localhost
