@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +16,8 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 
+import com.wiley.booking.paymentservice.configuration.EnvConfiguration;
+
 /**
  * @author Dilanka
  * @create at 3/7/2021
@@ -23,9 +25,7 @@ import org.springframework.kafka.transaction.KafkaTransactionManager;
 @Configuration
 public class KafkaProducerConfig {
 
-  @Value(value = "${kafka.bootstrapAddress}")
-  private String bootstrapAddress;
-
+  @Autowired EnvConfiguration envConfiguration;
 
   @Bean(name = "kafkaTransactionManager")
   @ConditionalOnMissingBean(KafkaTransactionManager.class)
@@ -36,7 +36,8 @@ public class KafkaProducerConfig {
   @Bean
   public ProducerFactory<?, ?> producerFactory() {
     Map<String, Object> configProps = new HashMap<>();
-    configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+    configProps.put(
+        ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, envConfiguration.getBootrstapAddresses());
     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
     DefaultKafkaProducerFactory<Object, Object> producerFactory =
@@ -51,5 +52,4 @@ public class KafkaProducerConfig {
   public KafkaTemplate<?, ?> kafkaTemplate() {
     return new KafkaTemplate<>(producerFactory());
   }
-
 }
