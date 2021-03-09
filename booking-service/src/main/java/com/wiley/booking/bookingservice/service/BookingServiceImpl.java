@@ -10,10 +10,11 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.client.result.UpdateResult;
+import com.wiley.booking.booking.Booking;
+import com.wiley.booking.booking.BookingStatus;
 import com.wiley.booking.bookingservice.exception.ReservationUpdateException;
 import com.wiley.booking.bookingservice.repository.BookingRepository;
-import com.wiley.booking.order.Booking;
-import com.wiley.booking.order.BookingStatus;
+;
 import com.wiley.booking.payment.PaymentStatus;
 
 import lombok.RequiredArgsConstructor;

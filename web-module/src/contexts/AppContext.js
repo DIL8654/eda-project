@@ -5,6 +5,8 @@ export const AppContext = createContext();
 export function AppContextProvider({ children }) {
 
     const [authData, setAuth] = useState(null);
+    const [user, setUser] = useState(null);
+
     const [bookNowOpen, setBookNowOpen] = useState(false);
 
     const [booking, setBooking] = useState({});
@@ -21,6 +23,8 @@ export function AppContextProvider({ children }) {
           setBookNowOpen,
           booking,
           setBooking,
+          user,
+          setUser,
         }}
       >
         {children}

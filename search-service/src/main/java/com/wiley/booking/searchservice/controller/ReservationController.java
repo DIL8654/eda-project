@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wiley.booking.order.Booking;
+import com.wiley.booking.order.Order;
 import com.wiley.booking.searchservice.reservation.ReservationService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,9 +23,10 @@ public class ReservationController {
   private final ReservationService reservationService;
 
   @PostMapping("/create")
-  public ResponseEntity<Booking> generateReservation(
-      @RequestBody(required = true) final Booking booking) {
+  public ResponseEntity<Order> generateReservation(
+      @RequestBody(required = true) final Order order) {
 
-    return ResponseEntity.ok(reservationService.createReservation(booking));
+    return ResponseEntity.ok(reservationService.createReservation(order));
   }
+
 }

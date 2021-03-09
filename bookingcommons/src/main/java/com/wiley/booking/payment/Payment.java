@@ -16,6 +16,7 @@ import lombok.Data;
 @Document(collection = "PAYMENT")
 public class Payment implements Serializable {
 
+  private String id;
   private String userRef;
   private String last4Digits;
   private String bookingRef;

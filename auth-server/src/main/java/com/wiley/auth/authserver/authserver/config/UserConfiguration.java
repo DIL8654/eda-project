@@ -24,6 +24,7 @@ public class UserConfiguration extends GlobalAuthenticationConfigurerAdapter {
         .roles("PREMIUM")
         .authorities("PREMIUM", "BASIC")
         .and()
+
         .withUser("Mahesh")
         .password(passwordEncoder.encode("mpass"))
         .roles("BASIC")

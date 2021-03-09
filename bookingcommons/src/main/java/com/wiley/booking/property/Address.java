@@ -3,12 +3,14 @@ package com.wiley.booking.property;
 import java.io.Serializable;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @author Dilanka
  * @create at 3/6/2021
  */
 
+@ToString
 @Data
 public class Address implements Serializable {
 

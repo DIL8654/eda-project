@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import com.wiley.booking.order.Booking;
+import com.wiley.booking.booking.Booking;
+import com.wiley.booking.order.Order;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -25,19 +26,18 @@ public class KafkaProducer {
   @Autowired private KafkaTemplate<String, Object> kafkaTemplate;
 
   @Transactional
-  public void send(String topic, Booking payload) {
+  public void send(String topic, Order payload) {
     log.info("sending payload='{}' to topic='{}'", payload.toString(), topic);
-//    kafkaTemplate.send(topic, payload.getReservationRef(), payload);
 
     final ListenableFuture<SendResult<String, Object>> listenableFuture =
         kafkaTemplate.executeInTransaction(
-            operations -> operations.send(topic, payload.getPaymentRefId(), payload));
+            operations -> operations.send(topic, payload.getReservationRef(), payload));
 
     listenableFuture.addCallback(
         getCallback(
-            () -> "Reservation event fired successfully (Reservation Id={}, data={})",
-            () -> "Reservation event fired and failed (Reservation Id={}, data={})",
-            payload.getPaymentRefId(),
+            () -> "Order event fired successfully (Order Id={}, data={})",
+            () -> "Order event fired and failed (Order Id={}, data={})",
+            payload.getReservationRef(),
             payload.toString()));
   }
 

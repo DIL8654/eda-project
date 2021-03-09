@@ -1,15 +1,15 @@
 import React from 'react';
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+// const BASE_URL = process.env.REACT_APP_API_URL;
 
 const HEADERS = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
 
-const request = (token, method, path, body, isFullPath = false) => new Promise((resolve, reject) => {
+const request = (token, baseUrl, method, path, body, isFullPath = false) => new Promise((resolve, reject) => {
 
-  let url = `${BASE_URL}${path}`;
+  let url = `${baseUrl}${path}`;
 
   const requestParams = {
     method,
@@ -18,7 +18,7 @@ const request = (token, method, path, body, isFullPath = false) => new Promise((
   };
 
   if (token) {
-    requestParams.headers.Authorization = token;
+    requestParams.headers.Authorization = 'Bearer ' + token;
   }
   if (body) {
     requestParams.body = JSON.stringify(body);

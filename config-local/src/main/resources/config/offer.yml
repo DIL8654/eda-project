@@ -1,0 +1,25 @@
+server:
+  port: 8084
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/wiley
+    properties:
+      spring:
+        json:
+          trusted:
+            packages: com.wiley.booking.*
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8192/oauth/check_token
+    client:
+      client-id: web
+      client-secret: webpass

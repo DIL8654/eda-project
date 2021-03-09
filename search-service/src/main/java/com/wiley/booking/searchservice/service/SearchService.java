@@ -20,7 +20,9 @@ public interface SearchService {
       final Instant from, final Instant to);
 
   List<com.wiley.booking.searchservice.service.model.Property> findByDateRange(
-      String location, Instant from, Instant to, boolean premium);
+      String location, Instant from, Instant to);
 
-  void save(Property property);
+  Property save(Property property);
+
+  List<String> getAllLocations();
 }

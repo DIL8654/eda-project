@@ -1,4 +1,4 @@
-package com.wiley.booking.order;
+package com.wiley.booking.booking;
 
 /**
  * @author Dilanka

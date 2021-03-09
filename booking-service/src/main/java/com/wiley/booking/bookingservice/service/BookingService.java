@@ -1,6 +1,6 @@
 package com.wiley.booking.bookingservice.service;
 
-import com.wiley.booking.order.Booking;
+import com.wiley.booking.booking.Booking;
 import com.wiley.booking.payment.PaymentStatus;
 
 /**

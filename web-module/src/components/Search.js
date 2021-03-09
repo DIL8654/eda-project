@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { AppContext } from '../contexts/AppContext';
-import { getAvaiability, login } from '../services/Service';
+import { getAvaiability, login, getAllLocations } from '../services/Service';
 import Colors from '../helpers/Colors';
 
 import Table from '@material-ui/core/Table';
@@ -30,14 +30,15 @@ export default function Search() {
 
     const classes = useStyles();
 
-    const selections = [
-        { id: "loc1", name: "Location 1" },
-        { id: "loc2", name: "Location 2" },
-    ];
+    // const selections = [
+    //     { id: "loc1", name: "Location 1" },
+    //     { id: "loc2", name: "Location 2" },
+    // ];
 
     const [location, setLocation] = useState('');
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
+    const [selections, setSelections] = useState([]);
 
     const [data, setData] = useState([
         {
@@ -46,6 +47,15 @@ export default function Search() {
             price: '123',
         }
     ]);
+
+    useEffect(() => {
+        getAllLocations(authData).then((response) => {
+            setSelections(response);
+        })
+        .catch(() => {
+            alert("Error fetching all locations");
+        });
+    }, [])
 
     const onChangeLocation = (location) => {
         setLocation(location);
@@ -95,7 +105,7 @@ export default function Search() {
                             <MenuItem value="select">Select Location</MenuItem>
                             {
                                 selections.map((item) => {
-                                    return (<MenuItem value={item.id}>{item.name}</MenuItem>)
+                                    return (<MenuItem value={item}>{item}</MenuItem>)
                                 })
                             }
                         </Select>
@@ -150,12 +160,12 @@ export default function Search() {
                             </TableHead>
                             <TableBody>
                                 {data.map((row) => (
-                                    <TableRow key={row.name}>
+                                    <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="right">{row.price}</TableCell>
-                                        <TableCell align="right">{row.location}</TableCell>
+                                        <TableCell align="right">{row.address.city}</TableCell>
                                         <TableCell align="right">
                                             {
                                                 <Button

@@ -2,7 +2,7 @@ package com.wiley.booking.bookingservice.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.wiley.booking.order.Booking;
+import com.wiley.booking.booking.Booking;
 
 /**
  * @author Dilanka

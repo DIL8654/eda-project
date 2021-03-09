@@ -2,7 +2,9 @@ package com.wiley.booking.searchservice.service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,14 +46,14 @@ public class SearchServiceImpl implements SearchService {
 
     final List<com.wiley.booking.property.Property> data =
         mongoOperations.find(query, com.wiley.booking.property.Property.class);
-    return propertyMapper.map(data, false);
+    return propertyMapper.map(data);
   }
 
   @Override
   public Property findById(final String id) {
     Optional<com.wiley.booking.property.Property> property = searchRepository.findById(id);
     if (property.isPresent()) {
-      return propertyMapper.map(property.get(), false);
+      return propertyMapper.map(property.get());
     }
     throw new PropertyNotFoundException(" Expected property not found. property id: " + id);
   }
@@ -73,7 +75,7 @@ public class SearchServiceImpl implements SearchService {
 
   @Override
   public List<Property> findByDateRange(
-      final String location, final Instant from, final Instant to, final boolean premium) {
+      final String location, final Instant from, final Instant to) {
 
     Date fdate = Date.from(from);
     Date tdate = Date.from(to);
@@ -88,17 +90,40 @@ public class SearchServiceImpl implements SearchService {
     Query query =
         new Query()
             .addCriteria(criteria)
-            .addCriteria(Criteria.where("fromDate").lte(fdate))
-            .addCriteria(Criteria.where("toDate").gte(tdate));
+            .addCriteria(Criteria.where("fromDate").gte(fdate))
+            .addCriteria(Criteria.where("toDate").lte(tdate));
 
     List<com.wiley.booking.property.Property> properties =
         mongoOperations.find(query, com.wiley.booking.property.Property.class);
 
-    return propertyMapper.map(properties, premium);
+    return propertyMapper.map(properties);
   }
 
   @Override
-  public void save(final com.wiley.booking.property.Property property) {
-    searchRepository.save(property);
+  public com.wiley.booking.property.Property save(final com.wiley.booking.property.Property property) {
+    return searchRepository.save(property);
+  }
+
+  @Override
+  public List<String> getAllLocations() {
+    Iterable<com.wiley.booking.property.Property> all = searchRepository.findAll();
+    List<String> allLocations = new ArrayList<>();
+
+
+    if(all != null)
+    {
+      Iterator it = all.iterator();
+      while (it.hasNext())
+      {
+        String location = ((com.wiley.booking.property.Property)it.next()).getAddress().getCity().trim();
+        if(!allLocations.contains(location))
+        {
+          allLocations.add(location);
+        }
+
+      }
+      Collections.sort(allLocations);
+    }
+    return allLocations;
   }
 }

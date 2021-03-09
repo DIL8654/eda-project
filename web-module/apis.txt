@@ -1,0 +1,149 @@
+Login
+===============
+POST
+http://localhost:8899/authentication/oauth/token
+grant_type = password
+username = <entered>
+password = <entered>
+
+response:
+{
+  "access_token": "2bb21d0a-ed22-4ee7-9081-0b5fde4af05b",
+  "token_type": "bearer",
+  "expires_in": 43199,
+  "scope": "READ WRITE"
+}
+
+
+Get All Locations
+=================
+GET:
+http://localhost:8082/search/allLocations
+Authorization : bearer  2bb21d0a-ed22-4ee7-9081-0b5fde4af05b
+
+Response:
+[
+  "Anuradhapura",
+  "Colombo",
+  "Nuwara Eliya"
+]
+
+
+Properties search
+=====================
+POST
+http://localhost:8899/search/search/range
+Authorization : bearer  2bb21d0a-ed22-4ee7-9081-0b5fde4af05b
+
+post body:
+{
+   
+    "location":"Anuradhapura",
+    "from":"1615202990000",
+    "to":"1616239790000"
+}
+
+Response:
+
+[
+  {
+    "id": "6046708d0bf9f07b6cc41824",
+    "name": "Ananthaya Resort & spa",
+    "address": {
+      "street": "1st street",
+      "city": "Anuradhapura",
+      "country": "Sri lanka",
+      "postcode": "100001"
+    },
+    "price": 999.99,
+    "discount": 0.0,
+    "discountedPrice": 0.0,
+    "email": "ananthaya@ananthaya.com",
+    "hotlineMobile": "0714123456",
+    "available": true,
+    "fromDate": "2021-03-08T18:44:29.734Z",
+    "toDate": "2021-03-18T18:44:29.734Z"
+  },
+  {
+    "id": "604671b10bf9f07b6cc41825",
+    "name": "Ananthaya Resort & spa",
+    "address": {
+      "street": "1st street",
+      "city": "Anuradhapura",
+      "country": "Sri lanka",
+      "postcode": "100001"
+    },
+    "price": 999.99,
+    "discount": 0.0,
+    "discountedPrice": 0.0,
+    "email": "ananthaya@ananthaya.com",
+    "hotlineMobile": "0714123456",
+    "available": true,
+    "fromDate": "2021-03-08T18:49:21.120Z",
+    "toDate": "2021-03-18T18:49:21.120Z"
+  }
+ ]
+ 
+ Show selected Item on screen:
+ ====================================
+ then: Show selected Item:
+ 
+ with above properties
+ 
+ Click on BookNow:
+ ============================
+ POST: http://localhost:8899/search/reservation/create
+ 
+ Request Body:
+ {
+	"reservationRef": null,
+	"propertyId":"6043b954850af2707178bc19",
+	"bookingStatus":"BOOKING_CREATED",
+	"paymentRefId":null,
+	"userId":"6043b954850af2707178bc19"
+}
+
+Response:
+
+{
+  "reservationRef": "fb1280b9-7ff9-11eb-8b0d-019f3a964b29",
+  "propertyId": "6043b954850af2707178bc19",
+  "bookingStatus": "BOOKING_CREATED",
+  "paymentRefId": null,
+  "userId": "6043b954850af2707178bc19",
+  "createdAt": null,
+  "modifiedAt": null
+}
+
+SHow reservation ref in screen when success.
+
+Go to Payment
+==========================
+POST:
+ http://localhost:8899/payment/payment/pay
+ 
+ request body:
+ {
+	"cardNumber":"1234-5678-9012-3456",
+	"cvv":"123",
+	"paymentAmount":999.99,
+	"bookingRef":"a34b6596-7f0a-11eb-8698-47e1e03ad872",
+	"userId":"6043b954850af2707178bc19"
+}
+
+Response:
+
+{
+  "userRef": "6043b954850af2707178bc19",
+  "last4Digits": "3456",
+  "bookingRef": "a34b6596-7f0a-11eb-8698-47e1e03ad872",
+  "amount": 999.99,
+  "createdDate": "2021-03-08T10:35:41.153Z",
+  "paymentStatus": "PAYMENT_SUCCESS",
+  "paymentRef": "07a24b29-7ffa-11eb-8027-dfbb547ab122"
+}
+
+show success or fail with payment reference
+
+Click on home button- back to home
+ 

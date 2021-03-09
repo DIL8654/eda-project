@@ -15,6 +15,7 @@ import lombok.Data;
 @Builder
 public class Property {
 
+  private String id;
   private String name;
   private Address address;
   private double price;

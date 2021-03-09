@@ -20,7 +20,7 @@ export default function Login() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const { authData, setAuth } = useContext(AppContext);
+  const { authData, setAuth, setUser } = useContext(AppContext);
   const history = useHistory();
 
   const classes = useStyles();
@@ -33,8 +33,10 @@ export default function Login() {
       login({
         username: username,
         password: password,
+        grant_type = 'password',
       }).then((response) => {
-        setAuth(response);
+        setUser(username);
+        setAuth(response.access_token);
         history.replace("/search");
       }).catch(() => {
         alert("Invalid Credentials");

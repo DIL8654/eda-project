@@ -1,6 +1,7 @@
 package com.wiley.booking.searchservice.reservation;
 
-import com.wiley.booking.order.Booking;
+import com.wiley.booking.booking.Booking;
+import com.wiley.booking.order.Order;
 
 /**
  * @author Dilanka
@@ -8,6 +9,6 @@ import com.wiley.booking.order.Booking;
  */
 public interface ReservationService {
 
-  Booking createReservation(final Booking booking);
+  Order createReservation(final Order order);
 
 }

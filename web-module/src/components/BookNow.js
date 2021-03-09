@@ -3,7 +3,7 @@ import Modal from 'styled-react-modal'
 import { AppContext } from '../contexts/AppContext';
 import styled from "styled-components";
 import { useHistory } from 'react-router';
-import { pay } from '../services/Service';
+import { pay, createBooking } from '../services/Service';
 
 const StyledModal = Modal.styled`
 width: 40vw;
@@ -55,9 +55,11 @@ font-family: DINNextLTPro-Regular;
 
 export function BookNow() {
     const history = useHistory();
-    const { bookNowOpen, setBookNowOpen, setAuth, authData, booking } = useContext(AppContext);
+    const { bookNowOpen, setBookNowOpen, setAuth, authData, booking, user } = useContext(AppContext);
 
     const [payMode, setPayMode] = useState(false);
+
+    const [bookingResult, setBookingResult] = useState(null);
     const [receipt, setReceipt] = useState(null);
 
     const [cardNumber, setCardNumber] = useState('');
@@ -69,16 +71,35 @@ export function BookNow() {
         setPayMode(false);
     }
 
+    const onBookNowClick = () => {
+
+        createBooking(authData, {
+            "reservationRef": null,
+            "propertyId": booking.id,
+            "bookingStatus": "BOOKING_CREATED",
+            "paymentRefId": null,
+            "userId": user,
+        }).then((response) => {
+            setBookingResult(response);
+            setPayMode(true);
+        }).catch(() => {
+            alert('Failed to create booking');
+        });
+    }
+
     const onPayment = () => {
         pay({
             cardNumber: cardNumber,
-            cvv: cvv
+            cvv: cvv,
+            paymentAmount: booking.price,
+            bookingRef: bookingResult.reservationRef,
+            userId: user,
         }).then((response) => {
             setReceipt(response);
         })
-        .catch(() => {
-            alert("Payment failed");
-        });
+            .catch(() => {
+                alert("Payment failed");
+            });
     }
 
 
@@ -107,7 +128,7 @@ export function BookNow() {
                 <RowWrapper>
                     <Cell flex={1}>
                         <CustomText>
-                            {`Location:  ${booking.location}`}
+                            {`Location:  ${booking.address.city}`}
                         </CustomText>
                     </Cell>
                 </RowWrapper>
@@ -135,7 +156,7 @@ export function BookNow() {
 
                 <RowWrapper>
                     <Cell flex={1}>
-                        <button onClick={() => { setPayMode(true) }} style={{width: "120px"}}>
+                        <button onClick={() => { onBookNowClick() }} style={{ width: "120px" }}>
                             Book Now
                         </button>
                     </Cell>
@@ -143,7 +164,7 @@ export function BookNow() {
 
             </Container>}
 
-            {payMode && !receipt&& <Container>
+            {payMode && !receipt && <Container>
 
                 <RowWrapper>
                     <Cell flex={1}>
@@ -164,7 +185,7 @@ export function BookNow() {
 
                 <RowWrapper>
                     <Cell flex={1}>
-                        <button onClick={() => onPayment()} style={{width: "120px"}}>
+                        <button onClick={() => onPayment()} style={{ width: "120px" }}>
                             Pay Now
                         </button>
                     </Cell>
@@ -184,21 +205,21 @@ export function BookNow() {
                 <RowWrapper>
                     <Cell flex={1}>
                         <CustomText>
-                            {`Payment Ref:  ${receipt.paymenrRef}`}
+                            {`Payment Ref:  ${receipt.paymentRef}`}
                         </CustomText>
                     </Cell>
                 </RowWrapper>
                 <RowWrapper>
                     <Cell flex={1}>
                         <CustomText>
-                            {`Property Name:  ${receipt.propertyName}`}
+                            {`Property Name:  ${booking.name}`}
                         </CustomText>
                     </Cell>
                 </RowWrapper>
                 <RowWrapper>
                     <Cell flex={1}>
                         <CustomText>
-                            {`Payment:  ${receipt.payment}`}
+                            {`Payment:  ${receipt.amount}`}
                         </CustomText>
                     </Cell>
                 </RowWrapper>

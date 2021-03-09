@@ -1,7 +1,11 @@
 package com.wiley.booking.searchservice.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import lombok.Data;
 
@@ -22,4 +26,12 @@ public class EnvConfiguration {
 
   @Value(value = "${spring.kafka.consumer.bootstrap-servers}")
   private String bootrstapAddresses;
+
+  @LoadBalanced
+  @Bean
+  public RestTemplate getRestTemplate(RestTemplateBuilder restTemplateBuilder)
+  {
+     return restTemplateBuilder.build();
+  }
+
 }

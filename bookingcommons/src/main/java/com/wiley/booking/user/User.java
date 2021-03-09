@@ -14,6 +14,7 @@ import lombok.Data;
 @Document(collation = "USER")
 public class User implements Serializable {
 
+  private String id;
   private String userId;
   private UserType userType;
   private String email;
