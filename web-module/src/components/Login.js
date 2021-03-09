@@ -30,11 +30,7 @@ export default function Login() {
       alert('Please check your login credentials');
     }
     if (username && password) {
-      login({
-        username: username,
-        password: password,
-        grant_type = 'password',
-      }).then((response) => {
+      login(`grant_type=password&username=${username}&password=${password}`).then((response) => {
         setUser(username);
         setAuth(response.access_token);
         history.replace("/search");

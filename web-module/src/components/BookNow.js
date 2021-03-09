@@ -88,7 +88,7 @@ export function BookNow() {
     }
 
     const onPayment = () => {
-        pay({
+        pay(authData,{
             cardNumber: cardNumber,
             cvv: cvv,
             paymentAmount: booking.price,
@@ -128,7 +128,7 @@ export function BookNow() {
                 <RowWrapper>
                     <Cell flex={1}>
                         <CustomText>
-                            {`Location:  ${booking.address.city}`}
+                            {`Location:  ${booking.address}`}
                         </CustomText>
                     </Cell>
                 </RowWrapper>

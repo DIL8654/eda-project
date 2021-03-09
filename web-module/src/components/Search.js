@@ -30,10 +30,6 @@ export default function Search() {
 
     const classes = useStyles();
 
-    // const selections = [
-    //     { id: "loc1", name: "Location 1" },
-    //     { id: "loc2", name: "Location 2" },
-    // ];
 
     const [location, setLocation] = useState('');
     const [fromDate, setFromDate] = useState('');
@@ -165,7 +161,7 @@ export default function Search() {
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="right">{row.price}</TableCell>
-                                        <TableCell align="right">{row.address.city}</TableCell>
+                                        <TableCell align="right">{row.address?row.address.city: ''}</TableCell>
                                         <TableCell align="right">
                                             {
                                                 <Button

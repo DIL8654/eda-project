@@ -1,8 +1,10 @@
 import request from "../helpers/api";
 
+
 export const login = (loginData) => {
     const BASE_URL = process.env.REACT_APP_API_AUTH;
-
+    let headers = new Headers();
+    
     return new Promise((resolve, reject) => {
         request('', BASE_URL, 'POST', `authentication/oauth/token`, loginData).then((response) => {
 
@@ -29,7 +31,7 @@ export const getAvaiability = (token, location, from, to) => {
     const BASE_URL = process.env.REACT_APP_API_SEARCH;
 
     return new Promise((resolve, reject) => {
-        request(token, BASE_URL, 'POST', `availability/search/search/range`, {
+        request(token, BASE_URL, 'POST', `search/range`, {
             location: location,
             from: Date.parse(from),
             to: Date.parse(to),
@@ -43,10 +45,10 @@ export const getAvaiability = (token, location, from, to) => {
 }
 
 export const createBooking = (token, req) => {
-    const BASE_URL = process.env.REACT_APP_API_URL;
+    const BASE_URL = process.env.REACT_APP_API_SEARCH;
 
     return new Promise((resolve, reject) => {
-        request(token, BASE_URL, 'POST', `search/reservation/create`, req).then((response) => {
+        request(token, BASE_URL, 'POST', `reservation/create`, req).then((response) => {
 
             resolve(response);
         }).catch((error) => {
@@ -56,10 +58,10 @@ export const createBooking = (token, req) => {
 }
 
 export const pay = (token, card) => {
-    const BASE_URL = process.env.REACT_APP_API_URL;
+    const BASE_URL = process.env.REACT_APP_API_PAYMENT;
 
     return new Promise((resolve, reject) => {
-        request(token, BASE_URL, 'POST', `payment`, card).then((response) => {
+        request(token, BASE_URL, 'POST', `payment/pay`, card).then((response) => {
 
             resolve(response);
         }).catch((error) => {
