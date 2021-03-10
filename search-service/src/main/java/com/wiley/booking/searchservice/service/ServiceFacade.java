@@ -1,5 +1,7 @@
 package com.wiley.booking.searchservice.service;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -35,8 +37,8 @@ public class ServiceFacade {
         new CommonHysctrixCommand<Object>(
             "default",
             () -> {
-              return restTemplate.getForObject(
-                  "http://offer/offer/offer/getoffers" + offerRequest, Offer.class);
+              return restTemplate.postForObject(
+                  "http://offer/offer/getoffers", offerRequest, List.class);
             },
             () -> {
               return Collections.emptyList();
@@ -48,5 +50,13 @@ public class ServiceFacade {
 
   public List<Offer> fallbackOffers(final OfferRequest offerRequest) {
     return Collections.emptyList();
+  }
+
+  @com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand(fallbackMethod = "fallbackOffers")
+  public List<Offer> getOffers2(final OfferRequest offerRequest)
+  {
+    return restTemplate.postForObject(
+
+        "http://offer/offer/getoffers", offerRequest, List.class);
   }
 }

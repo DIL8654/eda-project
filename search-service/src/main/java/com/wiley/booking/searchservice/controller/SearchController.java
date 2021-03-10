@@ -27,6 +27,7 @@ import com.wiley.booking.searchservice.service.PropertyMapper;
 import com.wiley.booking.searchservice.service.SearchService;
 import com.wiley.booking.searchservice.service.ServiceFacade;
 import com.wiley.booking.searchservice.service.model.Property;
+import com.wiley.booking.searchservice.util.SampleData;
 
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,8 @@ public class SearchController {
   private final ServiceFacade serviceFacade;
   private final AuthService authService;
   private final PropertyMapper propertyMapper;
+
+  private final SampleData sampleData;
 
   @GetMapping("/allLocations")
   public ResponseEntity<List<String>> getAllLocations() {
@@ -94,7 +97,7 @@ public class SearchController {
             offerRequest.setPropertyIds(propertyIds);
             offerRequest.setFrom(searchCriteria.getFrom());
             offerRequest.setTo(searchCriteria.getTo());
-            offers = serviceFacade.getOffers(offerRequest);
+            offers = serviceFacade.getOffers2(offerRequest);
           }
           return ResponseEntity.ok(
               propertyMapper.calculateDiscounts(propertiesWithoutDiscount, offers));
@@ -112,6 +115,7 @@ public class SearchController {
   @PostMapping
   public void saveTestData(HttpServletRequest request) {
 
+    sampleData.insertSampleData();
     com.wiley.booking.property.Property property1 = new com.wiley.booking.property.Property();
     property1.setName("Ananthaya Resort & spa");
     Address address = new Address();
