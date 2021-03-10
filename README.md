@@ -50,3 +50,4 @@ This project consists of micro-services. Below steps needs to execute run this p
 9. Open web-module and install all dependencies "npm install".
 10. Start the web module with "npm start".
 11. Now you can access the front end via http://localhost:3000
+12. This auth module using in memory users. Use Username: Dilanka and password:dpass
