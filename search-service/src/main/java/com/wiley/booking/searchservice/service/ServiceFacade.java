@@ -36,7 +36,7 @@ public class ServiceFacade {
             "default",
             () -> {
               return restTemplate.getForObject(
-                  "http://offer/offer/getoffers" + offerRequest, Offer.class);
+                  "http://offer/offer/offer/getoffers" + offerRequest, Offer.class);
             },
             () -> {
               return Collections.emptyList();

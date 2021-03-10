@@ -48,9 +48,9 @@ export default function Search() {
         getAllLocations(authData).then((response) => {
             setSelections(response);
         })
-        .catch(() => {
-            alert("Error fetching all locations");
-        });
+            .catch(() => {
+                alert("Error fetching all locations");
+            });
     }, [])
 
     const onChangeLocation = (location) => {
@@ -117,7 +117,7 @@ export default function Search() {
                             onChange={(event) => onChangeFromDate(event.target.value)}
 
                         />
-                        {"          "}
+                        {"       /n   "}
                         <TextField
                             id="dateTo"
                             label="To"
@@ -138,7 +138,7 @@ export default function Search() {
                                 className={classes.submit}
                                 onClick={onSearchClick}
                             >
-                                {"Search"}
+                                {"Search Properties"}
                             </Button>
 
                         </Box>
@@ -147,9 +147,17 @@ export default function Search() {
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
-                                <TableRow>
+                                <TableRow style={{
+                                    backgroundColor: "lightgray",
+                                    fontSize: "16px",
+                                    fontStyle: "normal",
+                                    fontWeight: "bold",
+                                    textAlign: "center"
+                                }}>
                                     <TableCell>Name</TableCell>
                                     <TableCell align="right">Price</TableCell>
+                                    <TableCell align="right">discount rate</TableCell>
+                                    <TableCell align="right">discounted Price</TableCell>
                                     <TableCell align="right">Location</TableCell>
                                     <TableCell align="right">Action</TableCell>
                                 </TableRow>
@@ -161,10 +169,12 @@ export default function Search() {
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="right">{row.price}</TableCell>
-                                        <TableCell align="right">{row.address?row.address.city: ''}</TableCell>
+                                        <TableCell align="right">{row.discount}</TableCell>
+                                        <TableCell align="right">{row.discountedPrice}</TableCell>
+                                        <TableCell align="right">{row.address ? row.address.city : ''}</TableCell>
                                         <TableCell align="right">
                                             {
-                                                <Button
+                                                <Button style={{ backgroundColor: "lightgreen" }}
                                                     type="submit"
                                                     fullWidth
                                                     variant="contained"

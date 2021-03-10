@@ -88,7 +88,7 @@ export function BookNow() {
     }
 
     const onPayment = () => {
-        pay(authData,{
+        pay(authData, {
             cardNumber: cardNumber,
             cvv: cvv,
             paymentAmount: booking.price,
@@ -110,53 +110,100 @@ export function BookNow() {
             onEscapeKeydown={onClose}
         >
             {!payMode && <Container>
+                <RowWrapper>
+                    <Cell flex={1} style={{
+                        marginLeft: "30px",
+                        backgroundColor: "cadetblue",
+                        textAlign: "center",
+                        fontSize: "22px"
+                    }}>
+                        <CustomText style={{ textAlign: "center" }}>
+                            {`Book My Property : Selected Property`}
+                        </CustomText>
+                    </Cell>
+                </RowWrapper>
+                <RowWrapper>
+                    <Cell flex={1}>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`Name:`}
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
+                        <CustomText>
+                            {booking.name}
+                        </CustomText>
+                    </Cell>
+                </RowWrapper>
+                <RowWrapper>
+                    <Cell flex={1}>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`Price:`}
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
+                        <CustomText>
+                            {booking.price}
+                        </CustomText>
+                    </Cell>
+                </RowWrapper>
+                <RowWrapper>
+                    <Cell flex={1}>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`Location: `}
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
+                        <CustomText>
+                            {booking.address ? booking.address.city : ""}
+                        </CustomText>
+                    </Cell>
+                </RowWrapper>
+                <RowWrapper>
+                    <Cell flex={1}>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`Discount: `}
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
+                        <CustomText>
+                            {booking.discount || 0}
+                        </CustomText>
+                    </Cell>
+                </RowWrapper>
+                <RowWrapper>
+                    <Cell flex={1}>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`From: `}
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
+                        <CustomText>
+                            {booking.from}
+                        </CustomText>
+                    </Cell>
+                </RowWrapper>
+                <RowWrapper>
+                    <Cell flex={1}>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`To: `}
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
+                        <CustomText>
+                            {booking.to}
+                        </CustomText>
+                    </Cell>
+                </RowWrapper>
 
-                <RowWrapper>
-                    <Cell flex={1}>
-                        <CustomText>
-                            {`Name:  ${booking.name}`}
-                        </CustomText>
-                    </Cell>
-                </RowWrapper>
-                <RowWrapper>
-                    <Cell flex={1}>
-                        <CustomText>
-                            {`Price:  ${booking.price}`}
-                        </CustomText>
-                    </Cell>
-                </RowWrapper>
-                <RowWrapper>
-                    <Cell flex={1}>
-                        <CustomText>
-                            {`Location:  ${booking.address}`}
-                        </CustomText>
-                    </Cell>
-                </RowWrapper>
-                <RowWrapper>
-                    <Cell flex={1}>
-                        <CustomText>
-                            {`Discount:  ${booking.discount || 0}`}
-                        </CustomText>
-                    </Cell>
-                </RowWrapper>
-                <RowWrapper>
-                    <Cell flex={1}>
-                        <CustomText>
-                            {`From:  ${booking.from}`}
-                        </CustomText>
-                    </Cell>
-                </RowWrapper>
-                <RowWrapper>
-                    <Cell flex={1}>
-                        <CustomText>
-                            {`To:  ${booking.to}`}
-                        </CustomText>
-                    </Cell>
-                </RowWrapper>
-
-                <RowWrapper>
-                    <Cell flex={1}>
-                        <button onClick={() => { onBookNowClick() }} style={{ width: "120px" }}>
+                <RowWrapper >
+                    <Cell style={{ display: "flow-root" }} flex={1}>
+                        <button onClick={() => { onBookNowClick() }} style={
+                            {
+                                width: "150px",
+                                backgroundColor: "lightgreen",
+                                borderRadius: "5px",
+                                alignContent: "center",
+                            }}>
                             Book Now
                         </button>
                     </Cell>
@@ -167,25 +214,57 @@ export function BookNow() {
             {payMode && !receipt && <Container>
 
                 <RowWrapper>
+                    <Cell flex={1} style={{
+                        marginLeft: "30px",
+                        backgroundColor: "cadetblue",
+                        textAlign: "center",
+                        fontSize: "22px"
+                    }}>
+                        <CustomText style={{ textAlign: "center" }}>
+                            {`Pay Now`}
+    
+                        </CustomText>
+                    </Cell>
+
+                </RowWrapper>
+
+                <RowWrapper>
                     <Cell flex={1}>
-                        <CustomText>
-                            {`Card Number: `}
-                            <input style={{ border: 'solid', borderColor: '#111111' }} type="text"></input>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`Card Number:`}
+    
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
+                        <CustomText >
+                            <input style={{ border: 'solid', borderColor: '#111111' }} type="text" onChange={(event) => setCardNumber(event.target.value)}></input>
                         </CustomText>
                     </Cell>
                 </RowWrapper>
                 <RowWrapper>
                     <Cell flex={1}>
+                        <CustomText style={{ marginLeft: "50px" }}>
+                            {`CVV:`}
+                        
+                        </CustomText>
+                    </Cell>
+                    <Cell flex={1}>
                         <CustomText>
-                            {`CVV:        `}
-                            <input style={{ border: 'solid', borderColor: '#111111' }} type="text"></input>
+                            
+                            <input style={{ border: 'solid', borderColor: '#111111' }} type="text" onChange={(event) => setCvv(event.target.value)}></input>
                         </CustomText>
                     </Cell>
                 </RowWrapper>
 
                 <RowWrapper>
-                    <Cell flex={1}>
-                        <button onClick={() => onPayment()} style={{ width: "120px" }}>
+                    <Cell style={{ display: "flow-root" }} flex={1} >
+                        <button onClick={() => onPayment()}style={
+                            {
+                                width: "150px",
+                                backgroundColor: "lightgreen",
+                                borderRadius: "5px",
+                                alignContent: "center",
+                            }}>
                             Pay Now
                         </button>
                     </Cell>
@@ -195,6 +274,20 @@ export function BookNow() {
 
             {receipt && <Container>
 
+                <RowWrapper>
+                    <Cell flex={1} style={{
+                        marginLeft: "30px",
+                        backgroundColor: "cadetblue",
+                        textAlign: "center",
+                        fontSize: "22px"
+                    }}>
+                        <CustomText style={{ textAlign: "center" }}>
+                            {`Booking Completed`}
+    
+                        </CustomText>
+                    </Cell>
+
+                </RowWrapper>
                 <RowWrapper>
                     <Cell flex={1}>
                         <CustomText>
