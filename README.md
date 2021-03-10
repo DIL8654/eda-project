@@ -51,3 +51,6 @@ This project consists of micro-services. Below steps needs to execute run this p
 10. Start the web module with "npm start".
 11. Now you can access the front end via http://localhost:3000
 12. This auth module using in memory users. Use Username: Dilanka and password:dpass
+13. please execute this rest api to insert test data:
+    POST: http://localhost:8899/search/search or 
+            http://localhost:8082/search
